@@ -12,7 +12,7 @@ Este proyecto es un sistema que permite tener un flujo limpio y automatico para 
 
 **La arquitectura solicitada es la siguiente**
 
-![Solicitud inicial](images/actividad.png)
+![Solicitud inicial](images/TallerFinal.png)
 
 **Solucion Presentada**
 
