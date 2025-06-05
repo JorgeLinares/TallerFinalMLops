@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlflow
+  template:
+    metadata:
+      labels:
+        app: mlflow
+    spec:
+      containers:
+      - name: mlflow
+        image: mlflow/mlflow:2.7.1  # Usa la imagen oficial de MLflow
+        ports:
+        - containerPort: 5000  # Puerto de MLflow
+        env:
+          - name: MLFLOW_TRACKING_URI
+            value: "sqlite:///mlflow.db"  # Usamos SQLite para el backend store
+          - name: ARTIFACT_STORE_URI
+            value: "file:///mlflow-artifacts"  # Usamos el sistema de archivos local para los artefactos
+        volumeMounts:
+          - name: mlflow-data
+            mountPath: /mlflow
+      volumes:
+        - name: mlflow-data
+          emptyDir: {}  # Volumen temporal para los datos

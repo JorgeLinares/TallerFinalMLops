@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airflow-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airflow
+  template:
+    metadata:
+      labels:
+        app: airflow
+    spec:
+      containers:
+      - name: airflow
+        image: apache/airflow:2.7.1
+        ports:
+        - containerPort: 8080
+        env:
+          - name: AIRFLOW__CORE__EXECUTOR
+            value: "SequentialExecutor"
+          - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
+            value: "sqlite:////root/airflow/airflow.db"
+          - name: AIRFLOW__CORE__LOAD_EXAMPLES
+            value: "False"
+        volumeMounts:
+          - name: airflow-volume
+            mountPath: /root/airflow
+      volumes:
+        - name: airflow-volume
+          emptyDir: {}

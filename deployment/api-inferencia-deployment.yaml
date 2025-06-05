@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-inferencia
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-inferencia
+  template:
+    metadata:
+      labels:
+        app: api-inferencia
+    spec:
+      containers:
+        - name: api-inferencia
+          image: jorgelinares/api-inferencia:tag
+          ports:
+            - containerPort: 8000
+            - containerPort: 8503
+          imagePullPolicy: Always
